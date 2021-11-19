@@ -35,6 +35,22 @@ DATABASES = {
 	'PASSWORD': 'practica',
         'HOST': '127.0.0.1',
         'PORT': '5432',
+    },
+
+    'cassandra': {
+        'ENGINE': 'django_cassandra_engine',
+        'NAME': 'decide',
+        'USER': 'decide',
+        'PASSWORD': 'decide',
+        'TEST_NAME': 'test_db',
+
+        'HOST': '127.0.0.1',
+        'OPTIONS': {
+            'replication': {
+                'strategy_class': 'SimpleStrategy',
+                'replication_factor': 1
+            }
+        }
     }
 }
 
