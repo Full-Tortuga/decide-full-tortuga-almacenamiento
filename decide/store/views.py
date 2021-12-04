@@ -1,5 +1,7 @@
 from django.utils import timezone
 from django.utils.dateparse import parse_datetime
+from django.shortcuts import redirect, render
+from django.views.generic import TemplateView
 import django_filters.rest_framework
 from rest_framework import status
 from rest_framework.response import Response
@@ -58,6 +60,11 @@ class StoreView(generics.ListAPIView):
         if perms.status_code == 401:
             return Response({}, status=status.HTTP_401_UNAUTHORIZED)
 
+        #comprobamos que el voto está registrado
+        voto_registrado = Vote.objects.filter(voting_id=vid, voter_id=uid)
+        if voto_registrado:
+            return render(request, 'prueba.html', {'error': 'Ya has votado'})
+
         a = vote.get("a")
         b = vote.get("b")
 
@@ -69,4 +76,14 @@ class StoreView(generics.ListAPIView):
 
         v.save()
 
+
         return  Response({})
+
+    
+
+class PruebaView(TemplateView):
+    template_name = 'booth/prueba.html'
+
+    def prueba_view(request):
+        
+        return render(request, 'prueba.html')
