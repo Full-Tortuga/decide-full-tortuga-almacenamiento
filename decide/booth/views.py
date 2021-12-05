@@ -31,9 +31,4 @@ class BoothView(TemplateView):
         return context
 
 
-class PruebaView(TemplateView):
-    template_name = 'booth/prueba.html'
 
-    def prueba_view(request):
-        
-       return render(request, 'prueba.html')

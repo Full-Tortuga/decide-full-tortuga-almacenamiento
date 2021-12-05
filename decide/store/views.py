@@ -2,6 +2,8 @@ from django.utils import timezone
 from django.utils.dateparse import parse_datetime
 from django.shortcuts import redirect, render
 from django.views.generic import TemplateView
+from django.http import HttpResponse
+from tkinter import messagebox
 import django_filters.rest_framework
 from rest_framework import status
 from rest_framework.response import Response
@@ -11,6 +13,8 @@ from .models import Vote
 from .serializers import VoteSerializer
 from base import mods
 from base.perms import UserIsStaff
+
+
 
 
 class StoreView(generics.ListAPIView):
@@ -63,7 +67,8 @@ class StoreView(generics.ListAPIView):
         #comprobamos que el voto está registrado
         voto_registrado = Vote.objects.filter(voting_id=vid, voter_id=uid)
         if voto_registrado:
-            return render(request, 'prueba.html', {'error': 'Ya has votado'})
+            messagebox.askokcancel(message="Se ha encontrado un voto tuyo en esta votación, ¿desea almacenar este voto como nueva respuesta?", title="¡Cuidado!")
+            
 
         a = vote.get("a")
         b = vote.get("b")
@@ -81,9 +86,3 @@ class StoreView(generics.ListAPIView):
 
     
 
-class PruebaView(TemplateView):
-    template_name = 'booth/prueba.html'
-
-    def prueba_view(request):
-        
-        return render(request, 'prueba.html')
