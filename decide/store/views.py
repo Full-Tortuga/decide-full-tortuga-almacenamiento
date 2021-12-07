@@ -4,10 +4,12 @@ from django.shortcuts import redirect, render
 from django.views.generic import TemplateView
 from django.http import HttpResponse
 from tkinter import messagebox
+import tkinter as tk
 import django_filters.rest_framework
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework import generics
+from rest_framework.request import Request
 
 from .models import Vote
 from .serializers import VoteSerializer
@@ -67,22 +69,42 @@ class StoreView(generics.ListAPIView):
         #comprobamos que el voto está registrado
         voto_registrado = Vote.objects.filter(voting_id=vid, voter_id=uid)
         if voto_registrado:
-            messagebox.askokcancel(message="Se ha encontrado un voto tuyo en esta votación, ¿desea almacenar este voto como nueva respuesta?", title="¡Cuidado!")
-            
+            root = tk.Tk() 
+            root.withdraw()
+            respuesta1=messagebox.askokcancel(title="¡Cuidado!", message="Se ha encontrado un voto tuyo en esta votación, ¿desea almacenar este voto como nueva respuesta?")
+            if respuesta1==True: 
+                a = vote.get("a")
+                b = vote.get("b")
 
+                defs = { "a": a, "b": b }
+                v, _ = Vote.objects.get_or_create(voting_id=vid, voter_id=uid,
+                                                defaults=defs)
+                v.a = a
+                v.b = b
+
+                v.save()
+                return  Response({})
+            else:
+                return redirect('http://google.com/')
+                # return Response({}, status=status.HTTP_401_UNAUTHORIZED)
+                # r = Request.head('http://google.com/', allow_redirects=True)
+                # response = r.get(url)
+                # response.raise_for_status()  # raises exception when not a 2xx response
+                # if response.status_code != 204:
+                #     return response.json()
+                # return r.url
         a = vote.get("a")
         b = vote.get("b")
 
         defs = { "a": a, "b": b }
         v, _ = Vote.objects.get_or_create(voting_id=vid, voter_id=uid,
-                                          defaults=defs)
+                                        defaults=defs)
         v.a = a
         v.b = b
 
         v.save()
-
-
         return  Response({})
+        #return  Response({})
 
     
 
