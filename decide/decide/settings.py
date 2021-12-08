@@ -70,14 +70,9 @@ MODULES = [
     'postproc',
     'store',
     'visualizer',
+    'backups'
 ]
 
-''''
-    'mixnet',
-    'postproc',
-    'store',
-    'visualizer',
-    'voting','''
 
 BASEURL = 'http://localhost:8000'
 
