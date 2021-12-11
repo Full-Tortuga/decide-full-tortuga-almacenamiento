@@ -41,6 +41,7 @@ class StoreView(generics.ListAPIView):
         voting = mods.get('voting', params={'id': vid})
         if not voting or not isinstance(voting, list):
             return Response({}, status=status.HTTP_401_UNAUTHORIZED)
+        
         start_date = voting[0].get('start_date', None)
         end_date = voting[0].get('end_date', None)
         not_started = not start_date or timezone.now() < parse_datetime(start_date)
@@ -66,12 +67,14 @@ class StoreView(generics.ListAPIView):
         if perms.status_code == 401:
             return Response({}, status=status.HTTP_401_UNAUTHORIZED)
 
-        #comprobamos que el voto está registrado
-        voto_registrado = Vote.objects.filter(voting_id=vid, voter_id=uid)
+        #Comprobamos que el voto está registrado
+        voto_registrado = Vote.objects.filter(voting_id=vid, voter_id=uid).first()
+        #print(voto_registrado)
         if voto_registrado:
-            root = tk.Tk() 
+            root = tk.Tk()
             root.withdraw()
             respuesta1=messagebox.askokcancel(title="¡Cuidado!", message="Se ha encontrado un voto tuyo en esta votación, ¿desea almacenar este voto como nueva respuesta?")
+            #En caso de aceptar la modificación se realiza la modificación del voto
             if respuesta1==True: 
                 a = vote.get("a")
                 b = vote.get("b")
@@ -83,28 +86,22 @@ class StoreView(generics.ListAPIView):
                 v.b = b
 
                 v.save()
+                #Se elimina la ventana para poder volver a aparecer en caso de volver a querer editar el voto
+                root.destroy()
                 return  Response({})
             else:
-                return redirect('http://google.com/')
-                # return Response({}, status=status.HTTP_401_UNAUTHORIZED)
-                # r = Request.head('http://google.com/', allow_redirects=True)
-                # response = r.get(url)
-                # response.raise_for_status()  # raises exception when not a 2xx response
-                # if response.status_code != 204:
-                #     return response.json()
-                # return r.url
-        a = vote.get("a")
-        b = vote.get("b")
+                root.destroy()
+                return  Response({}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            a = vote.get("a")
+            b = vote.get("b")
 
-        defs = { "a": a, "b": b }
-        v, _ = Vote.objects.get_or_create(voting_id=vid, voter_id=uid,
-                                        defaults=defs)
-        v.a = a
-        v.b = b
+            defs = { "a": a, "b": b }
+            v, _ = Vote.objects.get_or_create(voting_id=vid, voter_id=uid,
+                                            defaults=defs)
+            v.a = a
+            v.b = b
 
-        v.save()
-        return  Response({})
-        #return  Response({})
-
-    
+            v.save()
+            return  Response({})
 
