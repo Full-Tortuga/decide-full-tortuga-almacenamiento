@@ -1,5 +1,7 @@
 from django.test import TestCase
 from django.conf import settings
+from django.test import tag
+
 from rest_framework.test import APIClient
 from rest_framework.test import APITestCase
 
@@ -158,6 +160,7 @@ class MixnetCase(APITestCase):
         self.assertNotEqual(clear, clear2)
         self.assertEqual(sorted(clear), sorted(clear2))
 
+    @tag('mixnet_fail')
     def test_multiple_auths_mock(self):
         '''
         This test emulates a two authorities shuffle and decryption.
