@@ -55,7 +55,7 @@ Para configurar el proyecto, podremos crearnos un fichero local_settings.py basa
 local_settings.example.py, donde podremos configurar la ruta de nuestras apps o escoger que módulos
 ejecutar.
 
-Se hará uso de la base de datos MongoDB, para el correcto funcionamiento de la aplicación será necesaria la instalación de dicha base de datos siguiendo las instrucciones de la documentación oficial según el SO que estemos utilizando:
+Se hará uso de la base de datos MongoDB. Para el correcto funcionamiento de la aplicación será necesaria la instalación de dicha base de datos siguiendo las instrucciones de la documentación oficial según el SO que estemos utilizando:
 
 Windows: 
     - https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/
@@ -75,9 +75,8 @@ fichero requirements.txt:
     pip install -r requirements.txt
 
 En caso de fallo al instalar las dependencias, es necesario instalas el paquete wheel y volver al comando anterior:
-    pip install wheel
 
-Entramos en la carpeta del proyecto (cd decide) y realizamos las migraciones correspondientes para preparar la base de datos:
+    pip install wheel
 
 Además, será necesario instalar las dependencias correspondientes al panel de control desarrollado con
 React. Para ello, primero se deberán tener instaldas las siguientes librerías de js con sus correspondientes
