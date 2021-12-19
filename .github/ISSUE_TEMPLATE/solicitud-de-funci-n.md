@@ -1,7 +1,7 @@
 ---
 name: Solicitud de función
 about: Sugiera una idea para este proyecto
-title: 'feat:'
+title: ''
 labels: feat
 assignees: ''
 
