@@ -3,7 +3,7 @@ name: Reporte de bug
 about: Crear un reporte para mejorar el sistema
 title: 'fix:'
 labels: fix
-assignees: javivm17, Javitoox, NoSoyDani, eveyugyug, dancasnar1, manmunesp12
+assignees: ''
 
 ---
 
