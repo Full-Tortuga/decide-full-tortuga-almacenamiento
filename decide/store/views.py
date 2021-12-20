@@ -3,8 +3,6 @@ from django.utils.dateparse import parse_datetime
 from django.shortcuts import redirect, render
 from django.views.generic import TemplateView
 from django.http import HttpResponse
-from tkinter import messagebox
-import tkinter as tk
 import django_filters.rest_framework
 from rest_framework import status
 from rest_framework.response import Response
@@ -71,32 +69,23 @@ class StoreView(generics.ListAPIView):
         voto_registrado = Vote.objects.filter(voting_id=vid, voter_id=uid)
         
         if voto_registrado:
-            root = tk.Tk()
-            root.withdraw()
-            respuesta1=messagebox.askokcancel(title="¡Cuidado!", message="Se ha encontrado un voto tuyo en esta votación, ¿desea almacenar este voto como nueva respuesta?")
-            #En caso de aceptar la modificación se realiza la modificación del voto
-            if respuesta1==True:
+            #En caso de editar el voto
+            #Se elimina  el voto anterior registrado
+            for vt in voto_registrado:
+                vt.delete()
 
-                #Se elimina  el voto anterior registrado
-                for vt in voto_registrado:
-                    vt.delete()
+            a = vote.get("a")
+            b = vote.get("b")
 
-                a = vote.get("a")
-                b = vote.get("b")
+            defs = { "a": a, "b": b }
+            v, _ = Vote.objects.get_or_create(voting_id=vid, voter_id=uid,
+                                            defaults=defs)
+            v.a = a
+            v.b = b
 
-                defs = { "a": a, "b": b }
-                v, _ = Vote.objects.get_or_create(voting_id=vid, voter_id=uid,
-                                                defaults=defs)
-                v.a = a
-                v.b = b
+            v.save()
+            return  Response({})
 
-                v.save()
-                #Se elimina la ventana para poder volver a aparecer en caso de volver a querer editar el voto
-                root.destroy()
-                return  Response({})
-            else:
-                root.destroy()
-                return  Response({}, status=status.HTTP_400_BAD_REQUEST)
         else:
             a = vote.get("a")
             b = vote.get("b")
