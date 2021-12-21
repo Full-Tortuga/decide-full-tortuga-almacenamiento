@@ -32,11 +32,13 @@ BASEURL = 'http://localhost:8000'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'decide',
-        'CLIENT': {
-           'host': '127.0.0.1',
-        }
-
+        "CLIENT": {
+           "name": 'decide',
+           "host": 'mongodb+srv://decide:@decide.3vypb.mongodb.net/decide?retryWrites=true&w=majority',
+           "username": 'decide',
+           "password": 'decide',
+           "authMechanism": "SCRAM-SHA-1",
+        }, 
     }
 }
 
