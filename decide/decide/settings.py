@@ -74,7 +74,7 @@ MODULES = [
 ]
 
 
-BASEURL = 'https://decide-full-tortuga-almacena.herokuapp.com/'
+BASEURL = 'https://decide-full-tortuga-almacena.herokuapp.com'
 
 APIS = {
     'authentication': BASEURL,
