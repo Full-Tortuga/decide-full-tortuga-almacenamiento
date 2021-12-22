@@ -40,7 +40,6 @@ jobs:
 
   deploy:
     needs: build
-    if: ${{github.ref == 'refs/heads/main' || github.ref == 'refs/heads/feature/29-despliegue_react_heroku'}}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
