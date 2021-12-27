@@ -71,22 +71,32 @@ MODULES = [
     'postproc',
     'store',
     'visualizer',
-    'backups'
 ]
 
 
-BASEURL = 'https://decide-full-tortuga-almacena.herokuapp.com'
-
 APIS = {
-    'authentication': BASEURL,
-    'base': BASEURL,
-    'booth': BASEURL,
-    'census': BASEURL,
-    'mixnet': BASEURL,
-    'postproc': BASEURL,
-    'store': BASEURL,
-    'visualizer': BASEURL,
-    'voting': BASEURL,
+    'authentication': 'http://localhost:8000',
+    'base': 'http://localhost:8000',
+    'booth': 'http://localhost:8000',
+    'census': 'http://localhost:8000',
+    'mixnet': 'http://localhost:8000',
+    'postproc': 'http://localhost:8000',
+    'store': 'http://localhost:8000',
+    'visualizer': 'http://localhost:8000',
+    'voting': 'http://localhost:8000',
+}
+
+BASEURL = 'http://localhost:8000'
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'djongo',
+        'NAME': 'decide',
+        'CLIENT': {
+           'host': '127.0.0.1',
+        }
+
+    }
 }
 
 MIDDLEWARE = [
@@ -120,22 +130,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'decide.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'djongo',
-        "CLIENT": {
-           "name": 'decide',
-           "host": 'mongodb+srv://decide:@decide.3vypb.mongodb.net/decide?retryWrites=true&w=majority',
-           "username": 'decide',
-           "password": 'decide',
-           "authMechanism": "SCRAM-SHA-1",
-        }, 
-    }
-}
 
 
 # Password validation
@@ -200,8 +194,3 @@ if os.path.exists("config.jsonnet"):
 
 
 INSTALLED_APPS = INSTALLED_APPS + MODULES
-
-NOSE_ARGS = [
-    '--with-xunit'
-]
-django_heroku.settings(locals(), test_runner=False)
