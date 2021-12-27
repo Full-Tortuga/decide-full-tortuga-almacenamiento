@@ -7,8 +7,10 @@ const Api = {
     return axios.get(URI_BACKEND + "admin/").then((res) => res.status);
   },
 
-  get_voting(id) {
-    return axios.get(URI_BACKEND + "voting/?id=" + id).then((res) => res.data);
+  get_census(voting_id) {
+    return axios
+      .get(URI_BACKEND + "census/" + voting_id + "/")
+      .then((res) => res.data);
   },
 };
 
