@@ -13,7 +13,9 @@ const Api = {
       .then((res) => res.data);
   },
   get_votes(voting_id){
-    return axios.get(URI_BACKEND + "voting/?id=" + voting_id).then((res) => res.data);
+    return axios
+       .get(URI_BACKEND + "voting/?id=" + voting_id)
+       .then((res) => res.data);
   }
 };
 

@@ -4,8 +4,8 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { ProgressBar } from "primereact/progressbar";
 
-const Voting = () => {
-  const [time, setTime] = useState(Date.now());
+
+const Votes = () => {
   const [errorConection, setErrorConection] = useState(null);
   const [state, setState] = useState({
     data: null,
@@ -16,15 +16,8 @@ const Voting = () => {
   }
 
   useEffect(() => {
-    const interval = setInterval(() => setTime(Date.now()), 1000);
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
-
-  useEffect(() => {
     deleteErrorMessage();
-    Api.get_votes(1)
+    Api.get_votes(window.location.href.split("=")[1])
       .then((res) => setState({ data: res }))
       .catch((error) => {
         setErrorConection(
@@ -37,79 +30,62 @@ const Voting = () => {
           </div>
         );
       });
-  }, [time]);
+  }, []);
 
   return (
     <div>
     {errorConection}
     <DataTable
         className="p-datatable-sm"
-        paginator
-        rows={5}
+        rows={1}
         value={state.data}
         header="Votaciones"
-        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-        rowsPerPageOptions={[5, 10, 25, 50]}
       >
         <Column
           sortable
           filter
-          filterPlaceholder="Id del votante"
-          field="id"
-          header="Id del votante"
+          filterPlaceholder="Votación"
+          field="name"
+          header="Votación"
         ></Column>
         <Column
           sortable
           filter
-          filterPlaceholder="Nombre de usuario"
-          field="username"
-          header="Nombre de usuario"
+          filterPlaceholder="Pregunta"
+          field="question.desc"
+          header="Pregunta"
+        ></Column>
+         <Column
+          sortable
+          filter
+          filterPlaceholder="Descripción"
+          field="desc"
+          header="Descripción"
         ></Column>
         <Column
           sortable
           filter
-          filterPlaceholder="Nombre"
-          field="first_name"
-          header="Nombre"
+          filterPlaceholder="Fecha Inicio"
+          field="start_date"
+          header="Fecha Inicio"
         ></Column>
         <Column
           sortable
           filter
-          filterPlaceholder="Apellidos"
-          field="last_name"
-          header="Apellidos"
+          filterPlaceholder="Fecha Final"
+          field="end_date"
+          header="Fecha Final"
         ></Column>
         <Column
           sortable
           filter
-          filterPlaceholder="Email"
-          field="email"
-          header="Email"
-        ></Column>
-        <Column
-          sortable
-          filter
-          filterPlaceholder="Género"
-          field="gender"
-          header="Género"
-        ></Column>
-        <Column
-          sortable
-          filter
-          filterPlaceholder="Región"
-          field="region"
-          header="Región"
-        ></Column>
-        <Column
-          sortable
-          filter
-          filterPlaceholder="Id de la votación"
-          field="voting_id"
-          header="Id de la votación"
+          filterPlaceholder="Resultado"
+          field="tally"
+          header="Resultado de la Votación"
         ></Column>
       </DataTable>
     </div>
   );
 };
 
-export default Voting;
+export default Votes;
