@@ -2,7 +2,8 @@ import Views from "./components/Views";
 import "./css/App.css";
 import { TabPanel } from "primereact/tabview";
 import ConnectionTest from "./components/ConnectionTest";
-
+import Votes from "./components/Votes";
+import Graphics from "./components/Graphics";
 function App() {
   return (
     <Views>
@@ -12,11 +13,11 @@ function App() {
       </TabPanel>
       <TabPanel header="Listado 2" rightIcon="pi pi-table">
         {/*Componente personalizado de listado*/}
-        <p>Listado 2</p>
+        <Votes />
       </TabPanel>
       <TabPanel header="Estadísticas" rightIcon="pi pi-chart-bar">
         {/*Componente personalizado de gráficos*/}
-        <p>Estadísticas</p>
+        <Graphics />
       </TabPanel>
       <TabPanel header="Prueba de conexión" leftIcon="pi pi-wifi">
         <ConnectionTest></ConnectionTest>
