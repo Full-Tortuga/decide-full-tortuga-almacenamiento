@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import Api from "../services/backend";
-import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
 import { ProgressBar } from "primereact/progressbar";
+import React from "react";
+import { Pie } from "react-chartjs-2";
+import Chart from 'chart.js/auto';
 
 
 const Graphics = () => {
   const [errorConection, setErrorConection] = useState(null);
   const [state, setState] = useState({
-    data: null,
+    data: '{}',
   });
 
   function deleteErrorMessage() {
@@ -31,11 +32,65 @@ const Graphics = () => {
         );
       });
   }, []);
-
+  let json_raw = JSON.stringify(state.data);
+  let jjson = json_raw.substring(1,json_raw.length-1);
+  var jsoon= JSON.parse(jjson);
+  var tally = jsoon.tally;
+  console.log(tally);
+  
   return (
     <div>
-    Test
+        <Pie
+          data={{
+              labels: ["Votos"],
+              datasets: [{
+  
+                  label: "",
+                  data: tally,
+                  backgroundColor: [
+                      'rgba(255, 99, 132, 0.2)',
+                      'rgba(50, 250, 250, 0.2)',
+                      'rgba(23, 99, 250, 0.2)',
+                      'rgba(250, 99, 250, 0.2)',
+                      'rgba(250, 0, 0, 0.2)'
+                      
+                  ],
+                  borderColor: [
+                      'rgba(255, 99, 132, 1)',
+                      'rgba(255, 99, 132, 1)',
+                      'rgba(255, 99, 132, 1)',
+                      'rgba(255, 99, 132, 1)',
+                      'rgba(255, 99, 132, 1)'
+                      
+                  ],
+                  borderWidth: 1
+              }]
+          }}
+          height={400}
+          width={600}
+          options={{
+  
+              maintainAspectRatio: false,
+              scales: {
+  
+                  yAxes: [
+                    {
+                      ticks: {
+                        beginAtZero: true,
+                      },
+                    },
+                  ],
+                },
+                legend: {
+                  labels: {
+                    fontSize: 25,
+                  },
+                },
+          }}
+  
+        />
     </div>
+
   );
 };
 
