@@ -2,13 +2,11 @@ import Views from "./components/Views";
 import "./css/App.css";
 import { TabPanel } from "primereact/tabview";
 import ConnectionTest from "./components/ConnectionTest";
-import Voting from "./components/Voting";
 import Votes from "./components/Votes";
 function App() {
   return (
     <Views>
       <TabPanel header="Votaciones" rightIcon="pi pi-inbox">
-        <Voting />
       </TabPanel>
       <TabPanel header="Votos" rightIcon="pi pi-inbox">
         <Votes />
