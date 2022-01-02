@@ -12,6 +12,7 @@ const Api = {
       .get(URI_BACKEND + "census/" + voting_id + "/")
       .then((res) => res.data);
   },
+  
   create_backup() {
     return axios
       .post(URI_BACKEND + "backups/create")
