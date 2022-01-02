@@ -17,4 +17,4 @@ sqlparse==0.2.4
 gunicorn
 django-heroku
 dnspython
-easygui==0.98.1
+easygui==0.98.2

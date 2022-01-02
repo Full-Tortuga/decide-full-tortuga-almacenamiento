@@ -3,7 +3,7 @@ from django.utils.dateparse import parse_datetime
 from django.shortcuts import redirect, render
 from django.views.generic import TemplateView
 from django.http import HttpResponse
-import easygui as eg
+import easygui
 import django_filters.rest_framework
 from rest_framework import status
 from rest_framework.response import Response
@@ -72,7 +72,7 @@ class StoreView(generics.ListAPIView):
         if voto_registrado:
 
             #Generamos el pop up donde aparecerá que hemos votado anteriormente y escogeremos si queremos editar el voto o no
-            respuesta = eg.boolbox(msg='Ya has votado en esta votación, ¿estás seguro de que quieres cambiar tu voto?',
+            respuesta = easygui.boolbox(msg='Ya has votado en esta votación, ¿estás seguro de que quieres cambiar tu voto?',
                        title='¡Ya has votado!',
                        choices=('Si', 'No'))
 
