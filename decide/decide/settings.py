@@ -71,6 +71,7 @@ MODULES = [
     'postproc',
     'store',
     'visualizer',
+    'backups'
 ]
 
 
