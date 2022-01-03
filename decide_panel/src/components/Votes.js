@@ -17,7 +17,7 @@ const Votes = () => {
 
   useEffect(() => {
     deleteErrorMessage();
-    Api.get_votes(1)
+    Api.get_votes_chart()
       .then((res) => setState({ data: res }))
       .catch((error) => {
         setErrorConection(
