@@ -193,3 +193,49 @@ class StoreTextCase(BaseTestCase):
         self.voting.save()
         response = self.client.post('/store/', data, format='json')
         self.assertEqual(response.status_code, 401)
+    
+    def test_voto_actualizado(self):
+        VOTING_ID = 1234
+        USUARIO = 69
+
+        #Creamos el usuario
+        user = self.get_or_create_user(USUARIO)
+
+        #Creamos la votación
+        voting = self.gen_voting(VOTING_ID)
+
+        #Añadimos el usuario al censo
+        census = Census(voting_id = VOTING_ID, voter_id = USUARIO)
+        census.save()
+
+        #Votamos
+        a1 = random.randint(50, 300)
+        b1 = random.randint(50, 300)
+        vote = Vote(voting_id = VOTING_ID, voter_id = USUARIO, a = a1, b = b1)
+        vote.save()
+        self.login()
+        response = self.client.get('/store/?voting_id={}&voter_id={}'.format(VOTING_ID, USUARIO), format='json')
+        self.assertEqual(response.status_code, 200)
+
+        #Borramos el voto actual
+        voto_registrado = Vote.objects.filter(voting_id=VOTING_ID, voter_id=USUARIO)
+        voto_registrado.delete()
+
+        #Votamos de nuevo
+        a2 = a1
+        b2 = b1
+        vote = Vote(voting_id = VOTING_ID, voter_id = USUARIO, a = a2, b = b2)
+        vote.save()
+        
+        response = self.client.get('/store/?voting_id={}&voter_id={}'.format(VOTING_ID, USUARIO), format='json')
+        self.assertEqual(response.status_code, 200)
+
+        #Comprobamos que el voto se ha guardado correctamente, siendo solo un voto
+        
+        response = self.client.get('/store/?voting_id={}&voter_id={}'.format(VOTING_ID, USUARIO), format='json')
+        self.assertEqual(response.status_code, 200)
+        votes = response.json()
+
+        self.assertEqual(len(votes), 1)
+        self.assertEqual(votes[0]["voting_id"], VOTING_ID)
+        self.assertEqual(votes[0]["voter_id"], USUARIO)
