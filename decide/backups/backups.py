@@ -6,6 +6,7 @@ from rest_framework.status import (
     HTTP_200_OK,
     HTTP_201_CREATED as ST_201,
     HTTP_400_BAD_REQUEST as ST_400,
+    HTTP_404_NOT_FOUND,
 )
 
 def location(dir):
@@ -34,11 +35,13 @@ class RestoreBackup(generics.ListCreateAPIView):
       try:
         print("Restoring mongo backup....")
         restore_backup = "mongorestore --drop -d decide ./backups/backups/" + backup_name +"/decide"
+        ls = os.listdir("./backups/backups")
+        if backup_name not in ls:
+           return Response({"No such file or directory"}, status=HTTP_404_NOT_FOUND)
         os.system(restore_backup)
         return Response({"Successfully backup restored "}, status=HTTP_200_OK)
       except Exception as e:
         return Response({"error": str(e)}, status=ST_400)
-
     
 
 
