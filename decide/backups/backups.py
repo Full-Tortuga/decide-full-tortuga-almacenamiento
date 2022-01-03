@@ -7,11 +7,13 @@ from rest_framework.status import (
     HTTP_201_CREATED as ST_201,
     HTTP_400_BAD_REQUEST as ST_400,
 )
+from . import serializers
 
 def location(dir):
   return dir + str(time.strftime("%d-%m-%Y-%H:%M:%S"))
 
 class CreateBackup(generics.CreateAPIView):
+  serializer_class = serializers.BackupSerializer
   def post(self, request, *args, **kwargs):
     try:
       print("generating mongo backup...")
@@ -22,6 +24,7 @@ class CreateBackup(generics.CreateAPIView):
       return Response({"error": str(e)}, status=ST_400)
     
 class RestoreBackup(generics.ListCreateAPIView):
+    serializer_class = serializers.BackupSerializer
     def get(self, request, *args, **kwargs):
       try:
         content = os.listdir("./backups/backups/")
