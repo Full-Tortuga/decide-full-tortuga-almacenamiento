@@ -45,7 +45,6 @@ const Votes = () => {
 
   return (
     <div>
-    <Dropdown options={state.data} placeholder="Selecciona una votación"/>
     <DataTable
         className="p-datatable-sm"
         paginator
