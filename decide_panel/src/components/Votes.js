@@ -28,7 +28,7 @@ const Votes = () => {
 
   useEffect(() => {
     deleteErrorMessage();
-    Api.get_votes(window.location.href.split("=")[1])
+    Api.get_votes()
       .then((res) => setState({ data: res }))
       .catch((error) => {
         setErrorConection(
@@ -43,15 +43,17 @@ const Votes = () => {
       });
   }, [time]);
 
-
   return (
     <div>
     <Dropdown options={state.data} placeholder="Selecciona una votación"/>
     <DataTable
         className="p-datatable-sm"
-        rows={1}
+        paginator
+        rows={5}
         value={state.data}
         header="Votaciones"
+        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+        rowsPerPageOptions={[5, 10, 25, 50]}
       >
         <Column
           sortable
