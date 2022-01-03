@@ -54,7 +54,7 @@ const Backups = () => {
 
   function restore(backup){
     var opcion = window.confirm("Esta seguro que deseas restaurar la copia de seguridad: "+backup);
-    if (opcion == true) {
+    if (opcion === true) {
       Api.restore_backup(backup)
       .then((status) => {
         if (status !== 400) {
