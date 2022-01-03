@@ -9,15 +9,23 @@ import { Dropdown } from 'primereact/dropdown';
 
 const Backups = () => {
   const [time, setTime] = useState(Date.now());
+  const [hora, setHora]= useState(new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date().getSeconds());
   const [state, setState] = useState({
     data: null,
   });
   const messages = useRef(null);
-
+  
   useEffect(() => {
     const interval = setInterval(() => setTime(Date.now()), 1000);
     return () => {
       clearInterval(interval);
+    };
+  }, []);
+
+  useEffect(() => {
+    const interval2 = setInterval(() => setHora(new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date().getSeconds()), 1000);
+    return () => {
+      clearInterval(interval2);
     };
   }, []);
 
@@ -33,6 +41,26 @@ const Backups = () => {
       }
       ); 
   }, [time]);
+  
+  useEffect(() => {
+    if(hora==="12:32:30"){
+      Api.create_backup()
+        .then((status) => {
+          if (status === 201) {
+            messages.current.show({
+              severity: "success",
+              summary: "Se ha la copia de seguriadad automatica se ha creado correctamente",
+            });
+          }
+        })
+        .catch((err) => {
+          messages.current.show({
+           severity: "warn",
+           summary: "Error generando el backup",
+          });
+        });
+      }
+  }, [time, hora]);
 
   function connect() {
     Api.create_backup()
@@ -75,6 +103,13 @@ const Backups = () => {
 
   return (
     <div>
+      La creación automatica de backup se realizará a las 11:32:30. Hora actual: {hora}
+      <br>
+      </br>
+      <br>
+      </br>
+      <br>
+      </br>
       <Messages ref={messages}></Messages>
       <center>
         <Card
