@@ -3,17 +3,28 @@ import Api from "../services/backend";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { ProgressBar } from "primereact/progressbar";
-
+import { Card } from "@nextui-org/react";
+import { Dropdown } from 'primereact/dropdown';
+import { useRef } from "react";
 
 const Votes = () => {
+  const [time, setTime] = useState(Date.now());
   const [errorConection, setErrorConection] = useState(null);
   const [state, setState] = useState({
     data: null,
   });
+  const messages = useRef(null);
 
   function deleteErrorMessage() {
     setErrorConection(null);
   }
+
+  useEffect(() => {
+    const interval = setInterval(() => setTime(Date.now()), 1000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   useEffect(() => {
     deleteErrorMessage();
@@ -30,11 +41,12 @@ const Votes = () => {
           </div>
         );
       });
-  }, []);
+  }, [time]);
+
 
   return (
     <div>
-    {errorConection}
+    <Dropdown options={state.data} placeholder="Selecciona una votación"/>
     <DataTable
         className="p-datatable-sm"
         rows={1}
