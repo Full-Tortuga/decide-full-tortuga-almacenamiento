@@ -49,14 +49,14 @@ const Backups = () => {
           if (status === 201) {
             messages.current.show({
               severity: "success",
-              summary: "Se ha la copia de seguriadad automatica se ha creado correctamente",
+              summary: "Se ha realizado la copia de seguridad automática correctamente",
             });
           }
         })
         .catch((err) => {
           messages.current.show({
            severity: "warn",
-           summary: "Error generando el backup",
+           summary: "Error generando el backup automático",
           });
         });
       }
