@@ -5,6 +5,9 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x, 17.x]
     services:
       mongodb:
         image: mongo
@@ -32,6 +35,18 @@ jobs:
         run: cd decide;python manage.py makemigrations;python manage.py migrate
       - name: Run tests
         run: cd decide;coverage run --branch --source=. ./manage.py test --settings=decide.test_settings --keepdb; coverage xml;
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies
+        run: cd decide_panel && npm install
+      - name: Deploy decide
+        run: cd decide && python manage.py runserver --settings=decide.test_settings
+      - name: Deploy decide_panel
+        run: cd decide_panel && npm start
+      - name: Test app
+        run: cd decide_panel && npm run test:e2e
       - name: Codacy Coverage Reporter
         uses: codacy/codacy-coverage-reporter-action@v1.1.0
         with:
