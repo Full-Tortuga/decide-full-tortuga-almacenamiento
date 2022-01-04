@@ -11,9 +11,9 @@ function App() {
       <TabPanel header="Votaciones" rightIcon="pi pi-inbox">
         <Voting />
       </TabPanel>
-      <TabPanel header="Listado 2" rightIcon="pi pi-table">
+      <TabPanel header="Votos" rightIcon="pi pi-table">
         {/*Componente personalizado de listado*/}
-        <p>Listado 2</p>
+        <p>Votos</p>
       </TabPanel>
       <TabPanel header="Estadísticas" rightIcon="pi pi-chart-bar">
         {/*Componente personalizado de gráficos*/}

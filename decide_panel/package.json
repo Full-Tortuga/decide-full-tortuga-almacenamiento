@@ -25,6 +25,9 @@
     "cypress:open": "cypress open"
   },
   "eslintConfig": {
+    "env": {
+      "cypress/globals": true
+    },
     "extends": [
       "react-app",
       "react-app/jest"
@@ -43,6 +46,6 @@
     ]
   },
   "devDependencies": {
-    "cypress": "^9.2.0"
+    "cypress": "^8.4.1"
   }
 }
