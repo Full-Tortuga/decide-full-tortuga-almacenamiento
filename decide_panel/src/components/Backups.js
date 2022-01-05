@@ -5,11 +5,13 @@ import Api from "../services/backend";
 import "../css/ConnectionTest.css";
 import { useEffect, useState } from "react";
 import { Dropdown } from 'primereact/dropdown';
+import { Button } from "@nextui-org/react";
 
 
 const Backups = () => {
   const [time, setTime] = useState(Date.now());
   const [hora, setHora]= useState(new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date().getSeconds());
+  const [activado, setActivado]=useState(true);
   const [state, setState] = useState({
     data: null,
   });
@@ -43,7 +45,7 @@ const Backups = () => {
   }, [time]);
   
   useEffect(() => {
-    if(hora==="12:32:30"){
+    if(hora==="21:34:15" && activado===true){
       Api.create_backup()
         .then((status) => {
           if (status === 201) {
@@ -60,7 +62,7 @@ const Backups = () => {
           });
         });
       }
-  }, [time, hora]);
+  }, [time, hora, activado]);
 
   function connect() {
     Api.create_backup()
@@ -78,6 +80,14 @@ const Backups = () => {
           summary: "Error generando el backup",
         });
       });
+  }
+
+  function activate(){
+    setActivado(true);
+  }
+
+  function deactivate(){
+    setActivado(false);
   }
 
   function restore(backup){
@@ -103,7 +113,18 @@ const Backups = () => {
 
   return (
     <div>
-      La creación automatica de backup se realizará a las 11:32:30. Hora actual: {hora}
+      La creación automatica de backup se realizará a las 21:34:15.   Hora actual: {hora}    
+      &nbsp;
+      &nbsp;
+      <Button color="green" onClick={activate} disabled={activado}>
+         Activar automatizión de backup
+      </Button>
+      &nbsp;
+      &nbsp;
+      &nbsp;
+      <Button color="red" onClick={deactivate} disabled={!activado}>
+         Deactivar automatizión de backup
+      </Button>
       <br>
       </br>
       <br>
