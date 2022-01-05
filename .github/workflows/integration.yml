@@ -64,6 +64,4 @@ jobs:
       - name: Run Cypress
         uses: cypress-io/github-action@v2
         with:
-          start: |
-          cd decide && python manage.py runserver --settings=decide.test_settings && 
-          cd ../decide_panel && npm start
+          start: cd decide && python manage.py runserver --settings=decide.test_settings && cd ../decide_panel && npm start
