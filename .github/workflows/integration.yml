@@ -47,7 +47,7 @@ jobs:
       - name: Deploy decide_panel
         run: |
           cd decide_panel && 
-          npm start &
+          npm run start:local &
       - name: Test app
         run: cd decide_panel && npm run test:e2e
       - name: Codacy Coverage Reporter
