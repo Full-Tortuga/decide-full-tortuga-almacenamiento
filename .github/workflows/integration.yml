@@ -56,8 +56,21 @@ jobs:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
           coverage-reports: decide/coverage.xml
 
-  deploy:
+  deploy-front:
     needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_2}}
+          heroku_app_name: "decide-full-tortuga-front"
+          heroku_email: "javiervilarinyomayo.cr@gmail.com"
+          appdir: "decide_panel/"
+
+
+  deploy-backend:
+    needs: deploy-front
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
