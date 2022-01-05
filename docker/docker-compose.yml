@@ -4,21 +4,25 @@ services:
   db:
     restart: always
     container_name: decide_db
-    image: postgres:alpine
+    image: mongo
+    environment:
+      - MONGO_INITDB_DATABASE=decide
+      - MONGO_INITDB_ROOT_USERNAME=decide
+      - MONGO_INITDB_ROOT_PASSWORD=decide
     volumes:
-      - db:/var/lib/postgresql/data
+      - ./mongo-volume:/data/db
     networks:
       - decide
+    ports:
+      - 27019:27019
   web:
     restart: always
     container_name: decide_web
     image: decide_web:latest
     build: .
-    command: ash -c "python manage.py migrate && gunicorn -w 5 decide.wsgi --timeout=500 -b 0.0.0.0:5000"
+    command: bash -c "python manage.py migrate && gunicorn -w 5 decide.wsgi --timeout=500 -b 0.0.0.0:5000"
     expose:
       - "5000"
-    volumes:
-      - static:/app/static
     depends_on:
       - db
     networks:

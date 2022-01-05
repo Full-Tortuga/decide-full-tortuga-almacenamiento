@@ -2,13 +2,16 @@ DEBUG = True
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'HOST': 'db',
-        'PORT': 5432,
+        'ENGINE': 'djongo',
+        'NAME': 'decide',
+        'PORT': '27017',
+        'CLIENT': {
+           'host': '10.5.0.1',
+        }
+
     }
 }
+
 
 STATIC_ROOT = '/app/static/'
 MEDIA_ROOT = '/app/static/media/'
