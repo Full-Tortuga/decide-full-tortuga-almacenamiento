@@ -28,15 +28,15 @@
     "start:local": "env-cmd -f .env.local react-scripts start"
   },
   "eslintConfig": {
+    "plugins": [
+      "cypress"
+    ],
     "env": {
       "cypress/globals": true
     },
     "extends": [
       "react-app",
       "react-app/jest"
-    ],
-    "plugins": [
-      "cypress"
     ]
   },
   "browserslist": {
