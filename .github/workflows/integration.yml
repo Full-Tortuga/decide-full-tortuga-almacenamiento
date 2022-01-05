@@ -45,7 +45,6 @@ jobs:
         uses: cypress-io/github-action@v1
         with:
           start: cd decide && python manage.py runserver --settings=decide.test_settings && cd ../decide_panel && npm start
-          end: cd decide_panel && npm run test:e2e
       - name: Codacy Coverage Reporter
         uses: codacy/codacy-coverage-reporter-action@v1.1.0
         with:
