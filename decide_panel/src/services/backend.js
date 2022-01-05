@@ -16,7 +16,23 @@ const Api = {
     return axios
        .get(URI_BACKEND + "voting/list")
        .then((res) => res.data);
-  }
+  },
+  
+  create_backup() {
+    return axios
+      .post(URI_BACKEND + "backups/create")
+      .then((res) => res.status);
+  },
+  get_backups() {
+    return axios
+      .get(URI_BACKEND + "backups/list")
+      .then((res) => res.data);
+  },
+  restore_backup(backup) {
+    return axios
+      .post(URI_BACKEND + "backups/restore/"+backup)
+      .then((res) => res.status);
+  },
 };
 
 export default Api;
