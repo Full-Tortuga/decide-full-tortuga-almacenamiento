@@ -50,9 +50,9 @@ jobs:
           heroku_email: "javikuka7@gmail.com"
 
   e2e:
-  needs: build
-  runs-on: ubuntu-16.04
-  steps:
+    needs: build
+    runs-on: ubuntu-16.04
+    steps:
       - name: Checkout Code
         uses: actions/checkout@v2
       - name: Install Node
