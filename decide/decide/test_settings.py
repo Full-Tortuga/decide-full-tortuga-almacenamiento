@@ -194,3 +194,5 @@ if os.path.exists("config.jsonnet"):
 
 
 INSTALLED_APPS = INSTALLED_APPS + MODULES
+
+PANEL_URI= "http://localhost:3000"

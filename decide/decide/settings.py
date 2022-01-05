@@ -205,3 +205,5 @@ NOSE_ARGS = [
     '--with-xunit'
 ]
 django_heroku.settings(locals(), test_runner=False)
+
+PANEL_URI= "https://decide-full-tortuga-front.herokuapp.com"
