@@ -45,7 +45,7 @@ const Backups = () => {
   }, [time]);
   
   useEffect(() => {
-    if(hora==="21:34:15" && activado===true){
+    if(hora==="20:49:15" && activado===true){
       Api.create_backup()
         .then((status) => {
           if (status === 201) {
@@ -84,10 +84,18 @@ const Backups = () => {
 
   function activate(){
     setActivado(true);
+    messages.current.show({
+      severity: "success",
+      summary: "Se ha activado la creación automática de backups",
+    });
   }
 
   function deactivate(){
     setActivado(false);
+    messages.current.show({
+      severity: "success",
+      summary: "Se ha desactivado la creación automática de backups",
+    });
   }
 
   function restore(backup){
@@ -113,7 +121,8 @@ const Backups = () => {
 
   return (
     <div>
-      La creación automatica de backup se realizará a las 21:34:15.   Hora actual: {hora}    
+      <Messages ref={messages}></Messages>
+      La creación automatica de backup se realizará a las 20:49:15.   Hora actual: {hora}        
       &nbsp;
       &nbsp;
       <Button color="green" onClick={activate} disabled={activado}>
@@ -131,7 +140,6 @@ const Backups = () => {
       </br>
       <br>
       </br>
-      <Messages ref={messages}></Messages>
       <center>
         <Card
           color="gradient"
