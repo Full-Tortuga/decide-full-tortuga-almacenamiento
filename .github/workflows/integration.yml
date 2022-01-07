@@ -69,6 +69,7 @@ jobs:
           appdir: "decide_panel/"
           checkstring: "ok"
           delay: 5
+          usedocker: true
 
   deploy-backend:
     needs: deploy-front
@@ -80,3 +81,4 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_2}}
           heroku_app_name: "decide-full-tortuga-4"
           heroku_email: "javiervilarinyomayo.cr@gmail.com"
+          usedocker: true
