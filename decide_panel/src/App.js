@@ -10,7 +10,6 @@ import Backups from "./components/Backups";
 function App() {
   return (
     <Views>
-      <p>Prueba</p>
       <TabPanel header="Votaciones" rightIcon="pi pi-inbox">
         <Voting />
       </TabPanel>
