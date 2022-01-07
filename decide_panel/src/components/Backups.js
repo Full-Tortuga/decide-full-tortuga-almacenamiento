@@ -4,8 +4,7 @@ import { Messages } from "primereact/messages";
 import Api from "../services/backend";
 import "../css/ConnectionTest.css";
 import { useEffect, useState } from "react";
-import { Dropdown } from 'primereact/dropdown';
-
+import { Dropdown } from "primereact/dropdown";
 
 const Backups = () => {
   const [time, setTime] = useState(Date.now());
@@ -23,15 +22,14 @@ const Backups = () => {
 
   useEffect(() => {
     Api.get_backups()
-      .then((res) => setState({ data: res['availables backups'] }))
+      .then((res) => setState({ data: res["availables backups"] }))
       .catch((err) => {
         messages.current.show({
           severity: "error",
           summary: "Error",
           detail: "Error al conectar con el servidor",
         });
-      }
-      ); 
+      });
   }, [time]);
 
   function connect() {
@@ -52,25 +50,27 @@ const Backups = () => {
       });
   }
 
-  function restore(backup){
-    var opcion = window.confirm("Esta seguro que deseas restaurar la copia de seguridad: "+backup);
-    if (opcion == true) {
+  function restore(backup) {
+    var opcion = window.confirm(
+      "Esta seguro que deseas restaurar la copia de seguridad: " + backup
+    );
+    if (opcion === true) {
       Api.restore_backup(backup)
-      .then((status) => {
-        if (status !== 400) {
+        .then((status) => {
+          if (status !== 400) {
+            messages.current.show({
+              severity: "success",
+              summary: "Se ha restaurado correctamente el backup",
+            });
+          }
+        })
+        .catch((err) => {
           messages.current.show({
-            severity: "success",
-            summary: "Se ha restaurado correctamente el backup",
+            severity: "warn",
+            summary: "Error restaurando el backup",
           });
-        }
-      })
-      .catch((err) => {
-        messages.current.show({
-          severity: "warn",
-          summary: "Error restaurando el backup",
         });
-      });
-	} 
+    }
   }
 
   return (
@@ -88,7 +88,11 @@ const Backups = () => {
           Generar nuevo backup(Copia de seguridad)
         </Card>
         <br></br> <br></br>
-        <Dropdown options={state.data} onChange={(e) => restore(e.value)} placeholder="Escoje una copia de seguridad"/>
+        <Dropdown
+          options={state.data}
+          onChange={(e) => restore(e.value)}
+          placeholder="Escoje una copia de seguridad"
+        />
       </center>
     </div>
   );

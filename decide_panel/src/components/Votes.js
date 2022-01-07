@@ -2,22 +2,12 @@ import { useEffect, useState } from "react";
 import Api from "../services/backend";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { ProgressBar } from "primereact/progressbar";
-import { Card } from "@nextui-org/react";
-import { Dropdown } from 'primereact/dropdown';
-import { useRef } from "react";
 
 const Votes = () => {
   const [time, setTime] = useState(Date.now());
-  const [errorConection, setErrorConection] = useState(null);
   const [state, setState] = useState({
     data: null,
   });
-  const messages = useRef(null);
-
-  function deleteErrorMessage() {
-    setErrorConection(null);
-  }
 
   useEffect(() => {
     const interval = setInterval(() => setTime(Date.now()), 1000);
@@ -27,25 +17,12 @@ const Votes = () => {
   }, []);
 
   useEffect(() => {
-    deleteErrorMessage();
-    Api.get_votes()
-      .then((res) => setState({ data: res }))
-      .catch((error) => {
-        setErrorConection(
-          <div className="alert alert-dark">
-            <strong>Error de conexión</strong>
-            <ProgressBar
-              mode="indeterminate"
-              style={{ height: "6px" }}
-            ></ProgressBar>
-          </div>
-        );
-      });
+    Api.get_votes().then((res) => setState({ data: res }));
   }, [time]);
 
   return (
     <div>
-    <DataTable
+      <DataTable
         className="p-datatable-sm"
         paginator
         rows={5}
@@ -68,7 +45,7 @@ const Votes = () => {
           field="question.desc"
           header="Pregunta"
         ></Column>
-         <Column
+        <Column
           sortable
           filter
           filterPlaceholder="Descripción"
