@@ -128,12 +128,12 @@ DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         "CLIENT": {
-           "name": 'decide',
-           "host": 'mongodb+srv://decide:@decide.3vypb.mongodb.net/decide?retryWrites=true&w=majority',
-           "username": 'decide',
-           "password": 'decide',
-           "authMechanism": "SCRAM-SHA-1",
-        }, 
+            "name": 'decide',
+            "host": 'mongodb+srv://decide:@decide.3vypb.mongodb.net/decide?retryWrites=true&w=majority',
+            "username": 'decide',
+            "password": 'decide',
+            "authMechanism": "SCRAM-SHA-1",
+        },
     }
 }
 
@@ -206,4 +206,4 @@ NOSE_ARGS = [
 ]
 django_heroku.settings(locals(), test_runner=False)
 
-PANEL_URI= "https://decide-full-tortuga-front.herokuapp.com"
+PANEL_URI = "https://decide-full-tortuga-front.herokuapp.com"

@@ -67,8 +67,6 @@ jobs:
           heroku_app_name: "decide-full-tortuga-front"
           heroku_email: "javiervilarinyomayo.cr@gmail.com"
           appdir: "decide_panel/"
-          checkstring: "ok"
-          delay: 5
 
   deploy-backend:
     needs: deploy-front

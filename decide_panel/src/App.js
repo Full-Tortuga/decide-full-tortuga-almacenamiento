@@ -6,7 +6,6 @@ import Votes from "./components/Votes";
 import Voting from "./components/Voting";
 import Backups from "./components/Backups";
 
-
 function App() {
   return (
     <Views>

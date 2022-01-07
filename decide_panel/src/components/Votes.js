@@ -74,7 +74,6 @@ const Votes = () => {
           header="Resultado de la Votación"
         ></Column>
       </DataTable>
-      <p>Prueba</p>
     </div>
   );
 };

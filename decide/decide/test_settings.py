@@ -93,7 +93,7 @@ DATABASES = {
         'ENGINE': 'djongo',
         'NAME': 'decide',
         'CLIENT': {
-           'host': '127.0.0.1',
+            'host': '127.0.0.1',
         }
 
     }
@@ -129,7 +129,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'decide.wsgi.application'
-
 
 
 # Password validation
@@ -195,4 +194,4 @@ if os.path.exists("config.jsonnet"):
 
 INSTALLED_APPS = INSTALLED_APPS + MODULES
 
-PANEL_URI= "http://localhost:3000"
+PANEL_URI = "http://localhost:3000"
