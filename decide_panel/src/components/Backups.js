@@ -12,6 +12,7 @@ const Backups = () => {
   const [time, setTime] = useState(Date.now());
   const [hora, setHora]= useState(new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date().getSeconds());
   const [activado, setActivado]=useState(true);
+  const [uno, setUno]=useState(1);
   const [state, setState] = useState({
     data: null,
   });
@@ -45,7 +46,7 @@ const Backups = () => {
   }, [time]);
   
   useEffect(() => {
-    if(hora==="20:49:15" && activado===true){
+    if(hora==="20:49:15" && activado===true && uno===1){
       Api.create_backup()
         .then((status) => {
           if (status === 201) {
@@ -61,8 +62,15 @@ const Backups = () => {
            summary: "Error generando el backup automático",
           });
         });
+	setUno(0);
       }
-  }, [time, hora, activado]);
+  }, [time, hora, activado, uno]);
+	
+  useEffect(() => {
+    if(hora==="20:49:15" && uno===0 && activado===true){
+      setUno(1);
+    }
+  }, [time, hora, uno, activado]);
 
   function connect() {
     Api.create_backup()
@@ -123,23 +131,20 @@ const Backups = () => {
     <div>
       <Messages ref={messages}></Messages>
       La creación automatica de backup se realizará a las 20:49:15.   Hora actual: {hora}        
-      &nbsp;
-      &nbsp;
-      <Button color="green" onClick={activate} disabled={activado}>
+      <br></br>
+      <br></br>
+      <Button color="success" onClick={activate} disabled={activado}>
          Activar automatizión de backup
       </Button>
       &nbsp;
       &nbsp;
-      &nbsp;
-      <Button color="red" onClick={deactivate} disabled={!activado}>
-         Deactivar automatizión de backup
-      </Button>
-      <br>
-      </br>
-      <br>
-      </br>
-      <br>
-      </br>
+     <Button color="error" onClick={deactivate} disabled={!activado}>
+       Desactivar automatizión de backup
+     </Button>
+     <br>
+     </br>
+     <br>
+     </br>
       <center>
         <Card
           color="gradient"
