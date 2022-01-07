@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [16.13.0]
+        node-version: [16.13.0, 14.15.0]
     services:
       mongodb:
         image: mongo
@@ -25,20 +25,20 @@ jobs:
           python-version: 3.8.12
       - name: psycopg2 prerequisites
         run: sudo apt-get install libpq-dev
-      - name: Install dependencies
+      - name: Install decide dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install codacy-coverage
       - name: Run migrations
         run: cd decide;python manage.py makemigrations;python manage.py migrate
-      - name: Run tests
+      - name: Run decide tests
         run: cd decide;coverage run --branch --source=. ./manage.py test --settings=decide.test_settings --keepdb; coverage xml;
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Install dependencies
+      - name: Install decide_panel dependencies
         run: cd decide_panel && npm install
       - name: Deploy decide
         run: |
@@ -48,7 +48,7 @@ jobs:
         run: |
           cd decide_panel && 
           npm run start:local &
-      - name: Test app
+      - name: Test React app
         run: cd decide_panel && npm run test:e2e
       - name: Codacy Coverage Reporter
         uses: codacy/codacy-coverage-reporter-action@v1.1.0
@@ -67,7 +67,9 @@ jobs:
           heroku_app_name: "decide-full-tortuga-front"
           heroku_email: "javiervilarinyomayo.cr@gmail.com"
           appdir: "decide_panel/"
-
+          healthcheck: "https://decide-full-tortuga-front.herokuapp.com/health"
+          checkstring: "ok"
+          delay: 5
 
   deploy-backend:
     needs: deploy-front
