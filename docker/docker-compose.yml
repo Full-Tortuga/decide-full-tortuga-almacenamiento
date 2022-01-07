@@ -2,57 +2,15 @@ version: '3.4'
 
 services:
   db:
-    restart: always
-    container_name: decide_db
-    image: mongo
+    image: 'mongo'
     environment:
       - MONGO_INITDB_DATABASE=decide
       - MONGO_INITDB_ROOT_USERNAME=decide
       - MONGO_INITDB_ROOT_PASSWORD=decide
+      - MONGO_INITDB_USER=decide
+      - MONGO_INITDB_PD=decide
     volumes:
-      - ./mongo-volume:/data/db
-    networks:
-      - decide
-    ports:
-      - 27019:27019
-  web:
-    restart: always
-    container_name: decide_web
-    image: decide_web:latest
-    build: .
-    command: bash -c "python manage.py migrate && gunicorn -w 5 decide.wsgi --timeout=500 -b 0.0.0.0:5000"
-    expose:
-      - "5000"
-    depends_on:
-      - db
-    networks:
-      - decide
-  nginx:
-    restart: always
-    container_name: decide_nginx
-    image: decide_nginx:latest
-    build:
-        context: .
-        dockerfile: Dockerfile-nginx
-    volumes:
-      - static:/app/static
-    ports:
-      - "8000:80"
-    depends_on:
-      - web
-    networks:
-      - decide
-
+      - ./init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh
+      - mongo_data:/data/decide
 volumes:
-  static:
-    name: decide_static
-  db:
-    name: decide_db
-
-networks:
-  decide:
-    driver: bridge
-    ipam:
-     driver: default
-     config:
-       - subnet: 10.5.0.0/16
+  mongo_data: {}

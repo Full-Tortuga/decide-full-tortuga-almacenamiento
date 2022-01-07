@@ -1,20 +1,32 @@
-from python:3.8.10
+from ubuntu
+
+RUN apt update
+RUN apt install -y python3.8
+RUN apt-get -y install python3-pip
+RUN apt-get -y install git
+RUN apt -y install libpq-dev python3-dev
+RUN apt install -y git gcc libc-dev
+RUN apt install -y gcc g++ make libffi-dev python3-dev
 
 RUN pip install gunicorn
-RUN pip install psycopg2
 RUN pip install ipdb
 RUN pip install ipython
+RUN pip install wheel
+RUN pip install psycopg2-binary
+
 
 WORKDIR /app
 
 RUN git clone https://github.com/Full-Tortuga/decide-full-tortuga-almacenamiento.git .
 RUN pip install -r requirements.txt
 
-WORKDIR /app/decide
+WORKDIR /app/decide/
 
 # local settings.py
-ADD docker-settings.py /app/decide/local_settings.py
 
-RUN ./manage.py collectstatic
+ADD docker-settings.py /app/decide/decide/test_settings.py
 
-#CMD ["gunicorn", "-w 5", "decide.wsgi", "--timeout=500", "-b 0.0.0.0:5000"]
+CMD ./manage.py collectstatic
+
+CMD ./manage.py runserver 127.0.0.1:8000
+
