@@ -67,7 +67,6 @@ jobs:
           heroku_app_name: "decide-full-tortuga-front"
           heroku_email: "javiervilarinyomayo.cr@gmail.com"
           appdir: "decide_panel/"
-          healthcheck: "https://decide-full-tortuga-front.herokuapp.com/health"
           checkstring: "ok"
           delay: 5
 
