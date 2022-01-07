@@ -10,7 +10,7 @@ from rest_framework.status import (
 from . import serializers
 
 def location(dir):
-  return dir + str(time.strftime("%d-%m-%Y-%H:%M:%S"))
+  return dir + str(time.strftime("%d-%m-%Y-%Hh%Mm%Ss"))
 
 class CreateBackup(generics.CreateAPIView):
   serializer_class = serializers.BackupSerializer
