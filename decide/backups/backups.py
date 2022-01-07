@@ -28,6 +28,7 @@ class RestoreBackup(generics.ListCreateAPIView):
     def get(self, request, *args, **kwargs):
       try:
         content = os.listdir("./backups/backups/")
+        content.pop()
         return Response({"availables backups": content}, status=HTTP_200_OK)
 
       except Exception as e:

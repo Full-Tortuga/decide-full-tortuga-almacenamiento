@@ -1,10 +1,12 @@
 import axios from "axios";
 
-const REACT_APP_URI_BACKEND  = process.env.REACT_APP_URI_BACKEND;
+const REACT_APP_URI_BACKEND = process.env.REACT_APP_URI_BACKEND;
 
 const Api = {
   connection_test() {
-    return axios.get(REACT_APP_URI_BACKEND + "admin/").then((res) => res.status);
+    return axios
+      .get(REACT_APP_URI_BACKEND + "admin/")
+      .then((res) => res.status);
   },
 
   get_census(voting_id) {
@@ -12,12 +14,13 @@ const Api = {
       .get(REACT_APP_URI_BACKEND + "census/" + voting_id + "/")
       .then((res) => res.data);
   },
-  get_votes(voting_id){
+
+  get_votes() {
     return axios
-       .get(URI_BACKEND + "voting/list")
-       .then((res) => res.data);
+      .get(REACT_APP_URI_BACKEND + "voting/list")
+      .then((res) => res.data);
   },
-  
+
   create_backup() {
     return axios
       .post(REACT_APP_URI_BACKEND + "backups/create")
@@ -30,7 +33,7 @@ const Api = {
   },
   restore_backup(backup) {
     return axios
-      .post(REACT_APP_URI_BACKEND + "backups/restore/"+backup)
+      .post(REACT_APP_URI_BACKEND + "backups/restore/" + backup)
       .then((res) => res.status);
   },
 };

@@ -103,5 +103,8 @@ ENV/
 
 .vagrant
 
+#backups
+decide/backups/backups/*
+
 #migrations
 decide/*/migrations
