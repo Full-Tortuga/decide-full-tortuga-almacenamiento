@@ -54,7 +54,7 @@ jobs:
         uses: codacy/codacy-coverage-reporter-action@v1.1.0
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-          coverage-reports: decide_panel/.nyc_output/out.json
+          coverage-reports: decide_panel/coverage/clover.xml
 
   deploy-front:
     needs: build
