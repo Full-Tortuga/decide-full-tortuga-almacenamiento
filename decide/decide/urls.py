@@ -18,11 +18,11 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework_swagger.views import get_swagger_view
 from django.shortcuts import redirect
-
+from django.conf import settings
 
 schema_view = get_swagger_view(title='Decide API')
 
-PANEL_URI = "http://localhost:3000"
+PANEL_URI = settings.PANEL_URI
 
 urlpatterns = [
     path('admin/', admin.site.urls),

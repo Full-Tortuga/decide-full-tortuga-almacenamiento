@@ -49,16 +49,19 @@ class CensusDetail(generics.RetrieveDestroyAPIView):
     def retrieve(self, request, voting_id, *args, **kwargs):
         voters = []
         try:
-            if voting_id == 0:
+            if voting_id == 0 or voting_id == None:
                 census = Census.objects.all()
             else:
                 census = Census.objects.filter(voting_id=voting_id)
             for c in census:
-                user = User.objects.get(id=c.voter_id)
-                voters.append({'id': user.id, 'username': user.username,
-                               'first_name': user.first_name, 'last_name': user.last_name,
-                               'email': user.email, 'gender': c.gender, 'region': c.region,
-                               'voting_id': c.voting_id})
+                try:
+                    user = User.objects.get(id=c.voter_id)
+                    voters.append({'id': user.id, 'username': user.username,
+                                   'first_name': user.first_name, 'last_name': user.last_name,
+                                   'email': user.email, 'gender': c.gender, 'region': c.region,
+                                   'voting_id': c.voting_id})
+                except User.DoesNotExist:
+                    continue
         except Error:
             return Response('Invalid voting', status=ST_400)
         return Response(voters)
