@@ -1,8 +1,8 @@
-import { Card } from "@nextui-org/react";
 import { useRef } from "react";
 import { Messages } from "primereact/messages";
 import Api from "../services/backend";
 import "../css/ConnectionTest.css";
+import { Button } from "primereact/button";
 
 const ConnectionTest = () => {
   const messages = useRef(null);
@@ -28,17 +28,13 @@ const ConnectionTest = () => {
   return (
     <div>
       <Messages ref={messages}></Messages>
-      <Card
-        id="card-connection-test"
-        color="gradient"
-        textColor="white"
-        width="50%"
-        hoverable="true"
+      <Button
+        className="p-button-outlined"
+        id="button-connection-test"
         onClick={connect}
-        clickable="true"
       >
         Conectar con decide (prueba de conexión)
-      </Card>
+      </Button>
     </div>
   );
 };

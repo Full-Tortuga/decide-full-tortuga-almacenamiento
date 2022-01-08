@@ -1,8 +1,7 @@
-import { Card } from "@nextui-org/react";
+import { Button } from "primereact/button";
 import { useRef } from "react";
 import { Messages } from "primereact/messages";
 import Api from "../services/backend";
-import "../css/ConnectionTest.css";
 import { useEffect, useState } from "react";
 import { Dropdown } from "primereact/dropdown";
 
@@ -77,16 +76,9 @@ const Backups = () => {
     <div>
       <Messages ref={messages}></Messages>
       <center>
-        <Card
-          color="gradient"
-          textColor="white"
-          width="50%"
-          hoverable="true"
-          onClick={connect}
-          clickable="true"
-        >
+        <Button className="p-button-outlined" onClick={connect}>
           Generar nuevo backup(Copia de seguridad)
-        </Card>
+        </Button>
         <br></br> <br></br>
         <Dropdown
           options={state.data}
