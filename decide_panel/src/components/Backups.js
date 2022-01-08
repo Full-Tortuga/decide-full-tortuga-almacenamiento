@@ -1,12 +1,9 @@
-import { Card } from "@nextui-org/react";
+import { Button } from "primereact/button";
 import { useRef } from "react";
 import { Messages } from "primereact/messages";
 import Api from "../services/backend";
-import "../css/ConnectionTest.css";
 import { useEffect, useState } from "react";
 import { Dropdown } from 'primereact/dropdown';
-import { Button } from "@nextui-org/react";
-
 
 const Backups = () => {
   const [time, setTime] = useState(Date.now());
@@ -34,19 +31,18 @@ const Backups = () => {
 
   useEffect(() => {
     Api.get_backups()
-      .then((res) => setState({ data: res['availables backups'] }))
+      .then((res) => setState({ data: res["availables backups"] }))
       .catch((err) => {
         messages.current.show({
           severity: "error",
           summary: "Error",
           detail: "Error al conectar con el servidor",
         });
-      }
-      ); 
+      });
   }, [time]);
   
   useEffect(() => {
-    if(hora==="20:49:15" && activado===true && uno===1){
+    if(hora==="18:22:14" && activado===true && uno===1){
       Api.create_backup()
         .then((status) => {
           if (status === 201) {
@@ -67,7 +63,7 @@ const Backups = () => {
   }, [time, hora, activado, uno]);
 	
   useEffect(() => {
-    if(hora==="20:49:15" && uno===0 && activado===true){
+    if(hora==="18:22:15" && uno===0 && activado===true){
       setUno(1);
     }
   }, [time, hora, uno, activado]);
@@ -108,23 +104,23 @@ const Backups = () => {
 
   function restore(backup){
     var opcion = window.confirm("Esta seguro que deseas restaurar la copia de seguridad: "+backup);
-    if (opcion == true) {
+    if (opcion === true) {
       Api.restore_backup(backup)
-      .then((status) => {
-        if (status !== 400) {
+        .then((status) => {
+          if (status !== 400) {
+            messages.current.show({
+              severity: "success",
+              summary: "Se ha restaurado correctamente el backup",
+            });
+          }
+        })
+        .catch((err) => {
           messages.current.show({
-            severity: "success",
-            summary: "Se ha restaurado correctamente el backup",
+            severity: "warn",
+            summary: "Error restaurando el backup",
           });
-        }
-      })
-      .catch((err) => {
-        messages.current.show({
-          severity: "warn",
-          summary: "Error restaurando el backup",
         });
-      });
-	} 
+    }
   }
 
   return (
@@ -133,31 +129,28 @@ const Backups = () => {
       La creación automatica de backup se realizará a las 20:49:15.   Hora actual: {hora}        
       <br></br>
       <br></br>
-      <Button color="success" onClick={activate} disabled={activado}>
-         Activar automatizión de backup
+      <Button color="green" onClick={activate} disabled={activado}>
+         Activar automatización de backup
       </Button>
       &nbsp;
       &nbsp;
-     <Button color="error" onClick={deactivate} disabled={!activado}>
-       Desactivar automatizión de backup
+     <Button color="red" onClick={deactivate} disabled={!activado}>
+       Desactivar automatización de backup
      </Button>
      <br>
      </br>
      <br>
      </br>
       <center>
-        <Card
-          color="gradient"
-          textColor="white"
-          width="50%"
-          hoverable="true"
-          onClick={connect}
-          clickable="true"
-        >
+        <Button className="p-button-outlined" onClick={connect}>
           Generar nuevo backup(Copia de seguridad)
-        </Card>
+        </Button>
         <br></br> <br></br>
-        <Dropdown options={state.data} onChange={(e) => restore(e.value)} placeholder="Escoje una copia de seguridad"/>
+        <Dropdown
+          options={state.data}
+          onChange={(e) => restore(e.value)}
+          placeholder="Escoje una copia de seguridad"
+        />
       </center>
     </div>
   );

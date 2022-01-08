@@ -95,11 +95,11 @@ realizamos la primera migración para preparar la base de datos que utilizaremos
 Por último, ya podremos ejecutar el módulos o módulos seleccionados en la configuración de la
 siguiente manera:
 
-    ./manage.py runserver
+    ./manage.py runserver --settings=decide.test_settings
 
 También debemos lanzar el panel de control, para ello dentro de la carpeta decide_panel ejecutamos:
 
-    npm start
+    npm run start:local
 
 Ejecutar con docker
 -------------------
