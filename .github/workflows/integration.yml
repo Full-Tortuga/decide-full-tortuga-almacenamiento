@@ -7,6 +7,7 @@ on:
       CODACY_PROJECT_TOKEN:
         required: true
       HEROKU_API_KEY:
+        required: true
 
 jobs:
   build:
