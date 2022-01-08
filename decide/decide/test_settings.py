@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
-import django_heroku
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -71,6 +70,7 @@ MODULES = [
     'postproc',
     'store',
     'visualizer',
+    'backups',
 ]
 
 
@@ -93,7 +93,7 @@ DATABASES = {
         'ENGINE': 'djongo',
         'NAME': 'decide',
         'CLIENT': {
-           'host': '127.0.0.1',
+            'host': '127.0.0.1',
         }
 
     }
@@ -129,7 +129,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'decide.wsgi.application'
-
 
 
 # Password validation
@@ -194,3 +193,5 @@ if os.path.exists("config.jsonnet"):
 
 
 INSTALLED_APPS = INSTALLED_APPS + MODULES
+
+PANEL_URI = "http://localhost:3000"

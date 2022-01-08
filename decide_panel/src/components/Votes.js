@@ -2,44 +2,34 @@ import { useEffect, useState } from "react";
 import Api from "../services/backend";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { ProgressBar } from "primereact/progressbar";
-
 
 const Votes = () => {
-  const [errorConection, setErrorConection] = useState(null);
+  const [time, setTime] = useState(Date.now());
   const [state, setState] = useState({
     data: null,
   });
 
-  function deleteErrorMessage() {
-    setErrorConection(null);
-  }
+  useEffect(() => {
+    const interval = setInterval(() => setTime(Date.now()), 1000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   useEffect(() => {
-    deleteErrorMessage();
-    Api.get_votes_chart()
-      .then((res) => setState({ data: res }))
-      .catch((error) => {
-        setErrorConection(
-          <div className="alert alert-dark">
-            <strong>Error de conexión</strong>
-            <ProgressBar
-              mode="indeterminate"
-              style={{ height: "6px" }}
-            ></ProgressBar>
-          </div>
-        );
-      });
-  }, []);
+    Api.get_votes().then((res) => setState({ data: res }));
+  }, [time]);
 
   return (
     <div>
-    {errorConection}
-    <DataTable
+      <DataTable
         className="p-datatable-sm"
-        rows={1}
+        paginator
+        rows={5}
         value={state.data}
         header="Votaciones"
+        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+        rowsPerPageOptions={[5, 10, 25, 50]}
       >
         <Column
           sortable
@@ -55,7 +45,7 @@ const Votes = () => {
           field="question.desc"
           header="Pregunta"
         ></Column>
-         <Column
+        <Column
           sortable
           filter
           filterPlaceholder="Descripción"

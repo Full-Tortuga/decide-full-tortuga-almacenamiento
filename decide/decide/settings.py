@@ -71,10 +71,11 @@ MODULES = [
     'postproc',
     'store',
     'visualizer',
+    'backups'
 ]
 
 
-BASEURL = 'https://decide-full-tortuga-almacena.herokuapp.com'
+BASEURL = 'https://decide-full-tortuga-4.herokuapp.com'
 
 APIS = {
     'authentication': BASEURL,
@@ -127,12 +128,12 @@ DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         "CLIENT": {
-           "name": 'decide',
-           "host": 'mongodb+srv://decide:@decide.3vypb.mongodb.net/decide?retryWrites=true&w=majority',
-           "username": 'decide',
-           "password": 'decide',
-           "authMechanism": "SCRAM-SHA-1",
-        }, 
+            "name": 'decide',
+            "host": 'mongodb+srv://decide:@decide.3vypb.mongodb.net/decide?retryWrites=true&w=majority',
+            "username": 'decide',
+            "password": 'decide',
+            "authMechanism": "SCRAM-SHA-1",
+        },
     }
 }
 
@@ -204,3 +205,5 @@ NOSE_ARGS = [
     '--with-xunit'
 ]
 django_heroku.settings(locals(), test_runner=False)
+
+PANEL_URI = "https://decide-full-tortuga-front.herokuapp.com"
