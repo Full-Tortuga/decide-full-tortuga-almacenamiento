@@ -7,6 +7,8 @@ RUN apt-get -y install git
 RUN apt -y install libpq-dev python3-dev
 RUN apt install -y git gcc libc-dev
 RUN apt install -y gcc g++ make libffi-dev python3-dev
+RUN whereis python3
+RUN ln -s /usr/bin/python3 /usr/bin/python
 
 RUN pip install gunicorn
 RUN pip install ipdb
@@ -26,7 +28,6 @@ WORKDIR /app/decide/
 
 ADD docker-settings.py /app/decide/decide/test_settings.py
 
-CMD ./manage.py collectstatic
+RUN ./manage.py collectstatic
 
-CMD ./manage.py runserver 127.0.0.1:8000
-
+CMD ./manage.py runserver 0.0.0.0:8000
