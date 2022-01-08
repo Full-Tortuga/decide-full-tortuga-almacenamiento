@@ -38,12 +38,12 @@ const Api = {
   },
   get_census(voting_id) {
     return axios
-      .get(URI_BACKEND + "census/" + voting_id + "/")
+      .get(REACT_APP_URI_BACKEND + "census/" + voting_id + "/")
       .then((res) => res.data);
   },
   get_votes_chart(voting_id){
     return axios
-       .get(URI_BACKEND + "voting/?id=" + voting_id)
+       .get(REACT_APP_URI_BACKEND + "voting/?id=" + voting_id)
        .then((res) => res.data);
   }
 };
