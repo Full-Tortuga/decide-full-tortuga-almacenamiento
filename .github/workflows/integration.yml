@@ -2,6 +2,7 @@ name: Python application
 
 on: [push]
 
+on:
   workflow_call:
     secrets:
       CODACY_PROJECT_TOKEN:
