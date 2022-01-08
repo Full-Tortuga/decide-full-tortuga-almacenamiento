@@ -36,6 +36,16 @@ const Api = {
       .post(REACT_APP_URI_BACKEND + "backups/restore/" + backup)
       .then((res) => res.status);
   },
+  get_census(voting_id) {
+    return axios
+      .get(REACT_APP_URI_BACKEND + "census/" + voting_id + "/")
+      .then((res) => res.data);
+  },
+  get_votes_chart(voting_id){
+    return axios
+       .get(REACT_APP_URI_BACKEND + "voting/?id=" + voting_id)
+       .then((res) => res.data);
+  }
 };
 
 export default Api;
