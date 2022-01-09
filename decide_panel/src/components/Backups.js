@@ -126,7 +126,7 @@ const Backups = () => {
   return (
     <div>
       <Messages ref={messages}></Messages>
-      La creación automatica de backup se realizará a las 20:49:15.   Hora actual: {hora}        
+      La creación automatica de backup se realizará a las 18:22:14.   Hora actual: {hora}        
       <br></br>
       <br></br>
       <Button color="green" onClick={activate} disabled={activado}>
@@ -149,7 +149,7 @@ const Backups = () => {
         <Dropdown
           options={state.data}
           onChange={(e) => restore(e.value)}
-          placeholder="Escoje una copia de seguridad"
+          placeholder="Escoge una copia de seguridad"
         />
       </center>
     </div>
