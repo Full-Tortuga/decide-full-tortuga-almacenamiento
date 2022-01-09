@@ -149,7 +149,7 @@ const Backups = () => {
         <Dropdown
           options={state.data}
           onChange={(e) => restore(e.value)}
-          placeholder="Escoje una copia de seguridad"
+          placeholder="Escoge una copia de seguridad"
         />
       </center>
     </div>
