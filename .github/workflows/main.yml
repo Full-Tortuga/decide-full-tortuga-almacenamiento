@@ -90,7 +90,7 @@ jobs:
           docker push ${{ secrets.DOCKER_USER }}/back:latest
 
 
-name: Python Frontend application
+name: Frontend application
 
 on:
   push:
