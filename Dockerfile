@@ -41,3 +41,14 @@ COPY . .
 CMD npm install
 EXPOSE 3000
 CMD npm run start:local
+
+FROM node AS builder
+WORKDIR /app/decide_panel/
+COPY . .
+CMD npm install
+EXPOSE 3000
+CMD npm run start:local
+
+FROM nginx
+WORKDIR /app/docker
+COPY docker-nginx.conf /etc/nginx/
