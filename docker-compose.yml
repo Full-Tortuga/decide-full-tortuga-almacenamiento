@@ -1,0 +1,16 @@
+version: '3.4'
+
+services:
+  db:
+    image: 'mongo'
+    environment:
+      - MONGO_INITDB_DATABASE=decide
+      - MONGO_INITDB_ROOT_USERNAME=decide
+      - MONGO_INITDB_ROOT_PASSWORD=decide
+      - MONGO_INITDB_USER=decide
+      - MONGO_INITDB_PD=decide
+    volumes:
+      - ./init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh
+      - mongo_data:/data/decide
+volumes:
+  mongo_data: {}
