@@ -11,11 +11,24 @@ describe("Backup generation", () => {
 
   it("backups page can be opened", () => {
     cy.contains("Generar nuevo backup");
+    cy.contains("Activar automatización de backup");
+    cy.contains("Desactivar automatización de backup");
   });
 
   it("backups can be generated", () => {
     cy.contains("Generar nuevo backup").click();
     cy.contains("Se ha creado correctamente el backup");
+  });
+  
+  it("backups aumotatitations can be deactivate", () => {
+    cy.contains("Desactivar automatización de backup").click();
+    cy.contains("Se ha desactivado la creación automática de backups");
+  });
+
+  it("backups aumotatitations can be activate", () => {
+    cy.contains("Desactivar automatización de backup").click();
+    cy.contains("Activar automatización de backup").click();
+    cy.contains("Se ha activado la creación automática de backups");
   });
 
   it("dropdown to restore backup exists and is clickable", () => {
