@@ -2,16 +2,15 @@ version: '3.4'
 
 services:
   front:
-    image: <nombre_usuario_Docker_Hub>/front:<version>
+    image: pepitoespana/front:latest
   back:
-    image: <nombre_usuario_Docker_Hub>/back:<version>
+    image: pepitoespana/back:latest
   lb:
-    build: ./container-chat-lb-example
     depends_on:
       - front
       - back
     ports:
-      - "8000:80"	
+      - "8000:80"
   db:
     image: 'mongo'
     environment:
