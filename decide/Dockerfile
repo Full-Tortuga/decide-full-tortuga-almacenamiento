@@ -1,4 +1,4 @@
-from ubuntu
+FROM ubuntu
 
 RUN apt update
 RUN apt install -y python3.8
@@ -17,38 +17,11 @@ RUN pip install ipython
 RUN pip install wheel
 RUN pip install psycopg2-binary
 
-
 WORKDIR /app
 
 RUN git clone https://github.com/Full-Tortuga/decide-full-tortuga-almacenamiento.git .
 RUN pip install -r requirements.txt
 
-WORKDIR /app/decide/
-
-# local settings.py
-
-ADD docker-settings.py /app/decide/decide/test_settings.py
-
-RUN ./manage.py collectstatic
+WORKDIR /app/decide
 
 CMD ./manage.py runserver 0.0.0.0:8000
-
-FROM node
-
-WORKDIR /app/decide_panel/
-
-COPY . .
-CMD npm install
-EXPOSE 3000
-CMD npm run start:local
-
-FROM node AS builder
-WORKDIR /app/decide_panel/
-COPY . .
-CMD npm install
-EXPOSE 3000
-CMD npm run start:local
-
-FROM nginx
-WORKDIR /app/docker
-COPY . .

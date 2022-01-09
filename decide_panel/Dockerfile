@@ -32,23 +32,3 @@ ADD docker-settings.py /app/decide/decide/test_settings.py
 RUN ./manage.py collectstatic
 
 CMD ./manage.py runserver 0.0.0.0:8000
-
-FROM node
-
-WORKDIR /app/decide_panel/
-
-COPY . .
-CMD npm install
-EXPOSE 3000
-CMD npm run start:local
-
-FROM node AS builder
-WORKDIR /app/decide_panel/
-COPY . .
-CMD npm install
-EXPOSE 3000
-CMD npm run start:local
-
-FROM nginx
-WORKDIR /app/docker
-COPY . .
