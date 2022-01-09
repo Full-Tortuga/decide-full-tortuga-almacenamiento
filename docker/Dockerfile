@@ -51,4 +51,4 @@ CMD npm run start:local
 
 FROM nginx
 WORKDIR /app/docker
-COPY docker-nginx.conf /etc/nginx/
+COPY . .
