@@ -42,7 +42,7 @@ jobs:
           pip install -r requirements.txt
           pip install codacy-coverage
       - name: Run migrations
-        run: cd decide;python manage.py makemigrations;python manage.py migrate
+        run: cd decide;python manage.py makemigrations --settings=decide.test_settings;python manage.py migrate --settings=decide.test_settings
       - name: Run decide tests
         run: cd decide;coverage run --branch --source=. ./manage.py test --settings=decide.test_settings --keepdb; coverage xml;
       - name: Use Node.js ${{ matrix.node-version }}
