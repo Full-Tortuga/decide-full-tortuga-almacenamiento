@@ -8,6 +8,10 @@ on:
         required: true
       HEROKU_API_KEY:
         required: true
+      DOCKER_USER:
+        required: true
+      DOCKER_PASSWORD:
+        required: true
 
 jobs:
   build:
@@ -38,7 +42,7 @@ jobs:
           pip install -r requirements.txt
           pip install codacy-coverage
       - name: Run migrations
-        run: cd decide;python manage.py makemigrations;python manage.py migrate
+        run: cd decide;python manage.py makemigrations --settings=decide.test_settings;python manage.py migrate --settings=decide.test_settings
       - name: Run decide tests
         run: cd decide;coverage run --branch --source=. ./manage.py test --settings=decide.test_settings --keepdb; coverage xml;
       - name: Use Node.js ${{ matrix.node-version }}
@@ -91,3 +95,42 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_2}}
           heroku_app_name: "decide-full-tortuga-4"
           heroku_email: "javiervilarinyomayo.cr@gmail.com"
+  
+  cd-back_docker:
+    needs: build
+    if: ${{github.ref == 'refs/heads/main'}}
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Docker login
+        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
+      - name: Build
+        run: cd decide && docker build -t back_docker .
+      - name: Tags
+        run: |
+          docker tag back_docker ${{ secrets.DOCKER_USER }}/back_docker:${{ github.sha }}
+          docker tag back_docker ${{ secrets.DOCKER_USER }}/back_docker:latest
+      - name: Push
+        run: |
+          docker push ${{ secrets.DOCKER_USER }}/back_docker:${{ github.sha }}
+          docker push ${{ secrets.DOCKER_USER }}/back_docker:latest
+
+  cd-front_docker:
+    needs: cd-back_docker
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Docker login
+        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
+      - name: Build
+        run: cd decide_panel && docker build -t front_docker .
+      - name: Tags
+        run: |
+          docker tag front_docker ${{ secrets.DOCKER_USER }}/front_docker:${{ github.sha }}
+          docker tag front_docker ${{ secrets.DOCKER_USER }}/front_docker:latest
+      - name: Push
+        run: |
+          docker push ${{ secrets.DOCKER_USER }}/front_docker:${{ github.sha }}
+          docker push ${{ secrets.DOCKER_USER }}/front_docker:latest
