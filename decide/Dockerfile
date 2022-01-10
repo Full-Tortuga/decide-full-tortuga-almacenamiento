@@ -24,4 +24,8 @@ RUN pip install -r requirements.txt
 
 WORKDIR /app/decide
 
-CMD ./manage.py runserver 0.0.0.0:8000 --settings=decide.test_settings
+EXPOSE 8000
+
+COPY . .
+
+CMD ./manage.py runserver --settings=decide.test_settings
