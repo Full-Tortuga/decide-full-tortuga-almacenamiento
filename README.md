@@ -105,49 +105,26 @@ También debemos lanzar el panel de control, para ello dentro de la carpeta deci
 Ejecutar con docker
 -------------------
 
-Existe una configuración de docker compose que lanza 3 contenedores, uno
-para el servidor de base de datos, otro para el django y otro con un
-servidor web nginx para servir los ficheros estáticos y hacer de proxy al
-servidor django:
+Existe una configuración de Docker que permite crear un contenedor para la aplicación de decide a partir 
+de la imagen generada por el Dockerfile existente, de la misma forma se puede generar la imagen para
+el panel de administración.
 
- * decide\_db
- * decide\_web
- * decide\_nginx
+En primer lugar debemos de construir la imagen, para ello nos dirigiremos a la ruta que contiene el fichero Dockerfile, 
+y ejecutaremos el siguiente comando:
 
-Además se crean dos volúmenes, uno para los ficheros estáticos y medias del
-proyecto y otro para la base de datos postgresql, de esta forma los
-contenedores se pueden destruir sin miedo a perder datos:
+    `docker build -t "<nombre_imagen_nueva>" .`
+    
+Tanto la imagen de decide como la imagen del panel de administración se deben de construir por separado.
+    
+Una vez construida la imagen debemos de crear una instancia de la misma, para ello ejecutaremos el siguiente comando:
+En caso de tratarse de la imagen referente al panel de administración:
 
- * decide\_db
- * decide\_static
+     `docker run -it -p 3000:3000 <nombre_imagen_panel_control>` 
+     
+En caso de tratarse de la imagen referente a la aplicación decide:
 
-Se puede editar el fichero docker-settings.py para modificar el settings
-del proyecto django antes de crear las imágenes del contenedor.
+     `docker run -it -p 8000:8000 <nombre_imagen_decide>
 
-Crear imágenes y lanzar contenedores:
-
-    $ cd docker
-    $ docker-compose up -d
-
-Parar contenedores:
-
-    $ docker-compose down
-
-Crear un usuario administrador:
-
-    $ docker exec -ti decide_web ./manage.py createsuperuser
-
-Lanzar la consola django:
-
-    $ docker exec -ti decide_web ./manage.py shell
-
-Lanzar tests:
-
-    $ docker exec -ti decide_web ./manage.py test
-
-Lanzar una consola SQL:
-
-    $ docker exec -ti decide_db ash -c "su - postgres -c 'psql postgres'"
 
 Ejecutar con vagrant + ansible
 ------------------------------
