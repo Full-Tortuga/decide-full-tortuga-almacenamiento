@@ -98,6 +98,7 @@ jobs:
   
   cd-back_docker:
     needs: build
+    if: ${{github.ref == 'refs/heads/main'}}
     runs-on: ubuntu-latest
 
     steps:
@@ -116,7 +117,7 @@ jobs:
           docker push ${{ secrets.DOCKER_USER }}/back_docker:latest
 
   cd-front_docker:
-    needs: build
+    needs: cd-back_docker
     runs-on: ubuntu-latest
 
     steps:
