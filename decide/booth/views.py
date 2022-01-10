@@ -12,6 +12,7 @@ class BoothView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        
         vid = kwargs.get('voting_id', 0)
 
         try:
@@ -29,3 +30,6 @@ class BoothView(TemplateView):
         context['KEYBITS'] = settings.KEYBITS
 
         return context
+
+
+

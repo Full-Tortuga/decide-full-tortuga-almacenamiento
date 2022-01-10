@@ -3,6 +3,7 @@ from django.utils.dateparse import parse_datetime
 from django.shortcuts import redirect, render
 from django.views.generic import TemplateView
 from django.http import HttpResponse
+import easygui
 import django_filters.rest_framework
 from rest_framework import status
 from rest_framework.response import Response
@@ -69,22 +70,33 @@ class StoreView(generics.ListAPIView):
         voto_registrado = Vote.objects.filter(voting_id=vid, voter_id=uid)
         
         if voto_registrado:
-            #En caso de editar el voto
-            #Se elimina  el voto anterior registrado
-            for vt in voto_registrado:
-                vt.delete()
 
-            a = vote.get("a")
-            b = vote.get("b")
+            #Generamos el pop up donde aparecerá que hemos votado anteriormente y escogeremos si queremos editar el voto o no
+            respuesta = easygui.boolbox(msg='Ya has votado en esta votación, ¿estás seguro de que quieres cambiar tu voto?',
+                       title='¡Ya has votado!',
+                       choices=('Si', 'No'))
 
-            defs = { "a": a, "b": b }
-            v, _ = Vote.objects.get_or_create(voting_id=vid, voter_id=uid,
-                                            defaults=defs)
-            v.a = a
-            v.b = b
+            if respuesta == True:
+                #En caso de editar el voto
+                #Se elimina  el voto anterior registrado
+                for vt in voto_registrado:
+                    vt.delete()
+                    
+                a = vote.get("a")
+                b = vote.get("b")
 
-            v.save()
-            return  Response({})
+                defs = { "a": a, "b": b }
+                v, _ = Vote.objects.get_or_create(voting_id=vid, voter_id=uid,
+                                                defaults=defs)
+                v.a = a
+                v.b = b
+
+                v.save()
+                return  Response({})
+
+            else:
+                #En caso de no querer modificarlo enviar una respuesta de tipo bad request
+                return Response({}, status=status.HTTP_400_BAD_REQUEST)
 
         else:
             a = vote.get("a")
