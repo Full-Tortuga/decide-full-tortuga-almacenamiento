@@ -123,8 +123,11 @@ En caso de tratarse de la imagen referente al panel de administración:
      
 En caso de tratarse de la imagen referente a la aplicación decide:
 
-     `docker run -it -p 8000:8000 <nombre_imagen_decide>
-
+     `docker run -it -p 8000:8000 <nombre_imagen_decide>` 
+ 
+ Además, en el directorio raíz del proyecto se ejecutarán automáticamente las dos imágenes con el siguiente comando:
+ 
+    `docker-compose up`
 
 Ejecutar con vagrant + ansible
 ------------------------------
