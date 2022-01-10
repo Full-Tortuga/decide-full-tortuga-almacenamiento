@@ -112,22 +112,22 @@ el panel de administración.
 En primer lugar debemos de construir la imagen, para ello nos dirigiremos a la ruta que contiene el fichero Dockerfile, 
 y ejecutaremos el siguiente comando:
 
-    `docker build -t "<nombre_imagen_nueva>" .`
+    docker build -t "<nombre_imagen_nueva>" .
     
 Tanto la imagen de decide como la imagen del panel de administración se deben de construir por separado.
     
 Una vez construida la imagen debemos de crear una instancia de la misma, para ello ejecutaremos el siguiente comando:
 En caso de tratarse de la imagen referente al panel de administración:
 
-     `docker run -it -p 3000:3000 <nombre_imagen_panel_control>` 
+    docker run -it -p 3000:3000 <nombre_imagen_panel_control>
      
 En caso de tratarse de la imagen referente a la aplicación decide:
 
-     `docker run -it -p 8000:8000 <nombre_imagen_decide>` 
+    docker run -it -p 8000:8000 <nombre_imagen_decide>
  
  Además, en el directorio raíz del proyecto se ejecutarán automáticamente las dos imágenes con el siguiente comando:
  
-    `docker-compose up`
+    docker-compose up
 
 Ejecutar con vagrant + ansible
 ------------------------------
